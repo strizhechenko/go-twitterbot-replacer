@@ -1,0 +1,9 @@
+consumer:
+  key: 
+  secret: 
+access:
+  token: 
+  secret: 
+replacements:
+  # word: replacement
+  # phrase with multiple words: replacement phrase
