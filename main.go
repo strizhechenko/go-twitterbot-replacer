@@ -36,11 +36,11 @@ func parseConfig(path string) Config {
 	return config
 }
 
-func makeAPI(config Config) anaconda.TwitterApi {
+func makeAPI(config Config) *anaconda.TwitterApi {
 	anaconda.SetConsumerKey(config.Consumer["key"])
 	anaconda.SetConsumerSecret(config.Consumer["secret"])
 	api := anaconda.NewTwitterApi(config.Access["token"], config.Access["secret"])
-	return *api
+	return api
 }
 
 func grabTweets(phrase string, api *anaconda.TwitterApi) []anaconda.Tweet {
@@ -71,7 +71,7 @@ func main() {
 	config := parseConfig("./config.yaml")
 	api := makeAPI(config)
 	for phrase := range config.Replacements {
-		tweets := grabTweets(phrase, &api)
+		tweets := grabTweets(phrase, api)
 		processTweets(tweets, config)
 	}
 }
