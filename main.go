@@ -14,8 +14,14 @@ var replacements map[string]string
 
 // Config is credentials
 type Config struct {
-	Consumer     map[string]string
-	Access       map[string]string
+	Consumer struct {
+		Key    string
+		Secret string
+	}
+	Access struct {
+		Token  string
+		Secret string
+	}
 	Replacements map[string]string
 }
 
@@ -37,9 +43,9 @@ func parseConfig(path string) Config {
 }
 
 func makeAPI(config Config) *anaconda.TwitterApi {
-	anaconda.SetConsumerKey(config.Consumer["key"])
-	anaconda.SetConsumerSecret(config.Consumer["secret"])
-	api := anaconda.NewTwitterApi(config.Access["token"], config.Access["secret"])
+	anaconda.SetConsumerKey(config.Consumer.Key)
+	anaconda.SetConsumerSecret(config.Consumer.Secret)
+	api := anaconda.NewTwitterApi(config.Access.Token, config.Access.Secret)
 	return api
 }
 
