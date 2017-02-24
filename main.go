@@ -7,8 +7,6 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-var replacements map[string]string
-
 // Config is credentials
 type Config struct {
 	Consumer struct {
