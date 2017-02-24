@@ -5,7 +5,7 @@ cd ./server
 cp -a config.yaml.tmplt config.yaml
 vim config.yaml # put here consumer key/secret + access token/secret + phrases for replacements
 go build
-./go-twitterbot-replacer
+./server
 ```
 
 # state
