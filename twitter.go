@@ -25,12 +25,6 @@ func grabTweets(phrase string, api *anaconda.TwitterApi) []string {
 	return statuses
 }
 
-func printTweets(tweets []string) {
-	for _, tweet := range tweets {
-		fmt.Println(tweet)
-	}
-}
-
 func makeTweets() []string {
 	config := parseConfig("./config.yaml")
 	newTweets := make(map[string]bool)
@@ -44,4 +38,10 @@ func makeTweets() []string {
 	}
 	api.Close()
 	return map2slice(newTweets)
+}
+
+func printTweets(tweets []string) {
+	for _, tweet := range tweets {
+		fmt.Println(tweet)
+	}
 }
