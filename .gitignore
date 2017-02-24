@@ -1,2 +1,2 @@
-go-twitterbot-replacer
-config.yaml
+server/server
+server/config.yaml
