@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/ChimeraCoder/Anaconda"
@@ -57,19 +58,34 @@ func grabTweets(phrase string, api *anaconda.TwitterApi) []anaconda.Tweet {
 	return tweets.Statuses
 }
 
-func processTweets(tweets []anaconda.Tweet, config Config) {
+func processTweets(tweets []anaconda.Tweet, config Config) map[string]bool {
 	var output string
+	noRT := regexp.MustCompile("rt @[A-Za-z0-9_]+:? ")
+	noNicknames := regexp.MustCompile("@[A-Za-z0-9_]+")
+	noLinks := regexp.MustCompile("https?://[^ ]+")
+	tweetsNew := make(map[string]bool)
 	for _, tweet := range tweets {
 		output = tweet.Text
 		for phrase, replacement := range config.Replacements {
 			output = strings.Replace(output, phrase, replacement, -1)
+			output = strings.ToLower(output)
+			output = noRT.ReplaceAllLiteralString(output, "")
+			output = noNicknames.ReplaceAllLiteralString(output, "")
+			output = noLinks.ReplaceAllLiteralString(output, "")
 		}
 		for _, replacement := range config.Replacements {
 			if strings.Contains(output, replacement) {
-				fmt.Println(output)
+				tweetsNew[output] = true
 				break
 			}
 		}
+	}
+	return tweetsNew
+}
+
+func printTweets(tweets map[string]bool) {
+	for tweet := range tweets {
+		fmt.Println(tweet)
 	}
 }
 
@@ -78,6 +94,7 @@ func main() {
 	api := makeAPI(config)
 	for phrase := range config.Replacements {
 		tweets := grabTweets(phrase, api)
-		processTweets(tweets, config)
+		tweetsNew := processTweets(tweets, config)
+		printTweets(tweetsNew)
 	}
 }
