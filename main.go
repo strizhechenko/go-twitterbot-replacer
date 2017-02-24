@@ -58,33 +58,51 @@ func grabTweets(phrase string, api *anaconda.TwitterApi) []anaconda.Tweet {
 	return tweets.Statuses
 }
 
-func processTweets(tweets []anaconda.Tweet, config Config) map[string]bool {
-	var output string
+func processTweet(tweet anaconda.Tweet, config Config) string {
 	noRT := regexp.MustCompile("rt @[A-Za-z0-9_]+:? ")
 	noNicknames := regexp.MustCompile("@[A-Za-z0-9_]+")
 	noLinks := regexp.MustCompile("https?://[^ ]+")
-	tweetsNew := make(map[string]bool)
-	for _, tweet := range tweets {
-		output = tweet.Text
-		for phrase, replacement := range config.Replacements {
-			output = strings.Replace(output, phrase, replacement, -1)
-			output = strings.ToLower(output)
-			output = noRT.ReplaceAllLiteralString(output, "")
-			output = noNicknames.ReplaceAllLiteralString(output, "")
-			output = noLinks.ReplaceAllLiteralString(output, "")
-		}
-		for _, replacement := range config.Replacements {
-			if strings.Contains(output, replacement) {
-				tweetsNew[output] = true
-				break
-			}
-		}
+	output := tweet.Text
+	for phrase, replacement := range config.Replacements {
+		output = strings.Replace(output, phrase, replacement, -1)
+		output = noNicknames.ReplaceAllLiteralString(output, "")
+		output = strings.ToLower(output)
+		output = noRT.ReplaceAllLiteralString(output, "")
+		output = noLinks.ReplaceAllLiteralString(output, "")
 	}
-	return tweetsNew
+	return output
 }
 
-func printTweets(tweets map[string]bool) {
-	for tweet := range tweets {
+func hasReplacement(tweet string, config Config) bool {
+	for _, replacement := range config.Replacements {
+		if strings.Contains(tweet, replacement) {
+			return true
+		}
+	}
+	return false
+}
+
+func processTweets(tweets []anaconda.Tweet, config Config) []string {
+	tweetsNew := make(map[string]bool)
+	for _, tweet := range tweets {
+		output := processTweet(tweet, config)
+		if hasReplacement(output, config) {
+			tweetsNew[output] = true
+		}
+	}
+	return map2slice(tweetsNew)
+}
+
+func map2slice(m map[string]bool) []string {
+	var slice []string
+	for k := range m {
+		slice = append(slice, k)
+	}
+	return slice
+}
+
+func printTweets(tweets []string) {
+	for _, tweet := range tweets {
 		fmt.Println(tweet)
 	}
 }
