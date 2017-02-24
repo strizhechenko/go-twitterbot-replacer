@@ -9,13 +9,12 @@ func processTweet(tweet string, config Config) string {
 	noRT := regexp.MustCompile("rt @[A-Za-z0-9_]+:? ")
 	noNicknames := regexp.MustCompile("@[A-Za-z0-9_]+")
 	noLinks := regexp.MustCompile("https?://[^ ]+")
-	output := tweet
+	output := strings.ToLower(tweet)
+	output = noRT.ReplaceAllLiteralString(output, "")
+	output = noNicknames.ReplaceAllLiteralString(output, "")
+	output = noLinks.ReplaceAllLiteralString(output, "")
 	for phrase, replacement := range config.Replacements {
 		output = strings.Replace(output, phrase, replacement, -1)
-		output = noNicknames.ReplaceAllLiteralString(output, "")
-		output = strings.ToLower(output)
-		output = noRT.ReplaceAllLiteralString(output, "")
-		output = noLinks.ReplaceAllLiteralString(output, "")
 	}
 	return output
 }

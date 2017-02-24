@@ -5,9 +5,7 @@ import (
 )
 
 func tweets(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"tweets": makeTweets(),
-	})
+	c.JSON(200, makeTweets())
 }
 
 func tweet(c *gin.Context) {
