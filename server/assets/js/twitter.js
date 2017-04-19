@@ -1,7 +1,13 @@
-$.getJSON("http://127.0.0.1:8080/tweets", function(data) {
+$.getJSON("/tweets", function(data) {
     var items = [];
     $.each(data, function(key, val) {
-        items.push("<div class=tweet id='tweet" + key + "'>" + val + "</div>");
+        items.push(
+		"<div class=tweet id='tweet" + key + "'>" + val +
+		"<br>" +
+		"<button class='tweetbutton'>tweet</button>" +
+		"<button class='blacklist'>blacklist</button>" +
+		"</div>"
+	);
     });
 
     $("<div/>", {

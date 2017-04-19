@@ -10,3 +10,18 @@ body {
  margin: 5px;
  color: #2F4F4F;
 }
+
+button {
+	margin-right: 3px;
+	padding: 3px;
+	font-size: 14px;
+	color: white;
+}
+
+button.blacklist {
+	background: #f00;
+}
+
+button.tweetbutton {
+	background: #aaf;
+}
