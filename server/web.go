@@ -18,7 +18,10 @@ func tweet(c *gin.Context) {
 
 func webMain() {
 	r := gin.Default()
+	r.StaticFile("/", "./assets/index.html")
+	r.Static("/css", "./assets/css")
+	r.Static("/js", "./assets/js")
 	r.GET("/tweets", tweets)
 	r.POST("/tweet", tweet)
-	r.Run() // listen and serve on 0.0.0.0:8080
+	r.Run()
 }

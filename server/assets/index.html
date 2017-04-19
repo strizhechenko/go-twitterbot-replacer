@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Coding Tips</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-3.2.1.min.js"></script>
+</head>
+
+<body>
+    <script>
+        $.getJSON("http://127.0.0.1:8080/tweets", function(data) {
+            var items = [];
+            $.each(data, function(key, val) {
+                items.push("<div class=tweet id='tweet" + key + "'>" + val + "</div>");
+            });
+
+            $("<div/>", {
+                "class": "app",
+                "contenteditable": "true",
+                html: items.join("")
+            }).appendTo("body");
+        });
+    </script>
+</body>
+
+</html>
