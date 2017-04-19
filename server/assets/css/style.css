@@ -1,6 +1,5 @@
 body {
   font-family: "Helvetica";
-  background-color: #C0C0C0;
 }
 
 .tweet {
@@ -9,6 +8,5 @@ body {
  height: 90px;
  padding: 5px;
  margin: 5px;
- background-color: #FDF5E6;
  color: #2F4F4F;
 }
