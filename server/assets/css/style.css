@@ -1,0 +1,12 @@
+body {
+  font-family: "Helvetica";
+}
+
+.tweet {
+ width: 400px;
+ float: left;
+ height: 90px;
+ padding: 5px;
+ margin: 5px;
+ color: #2F4F4F;
+}
