@@ -18,6 +18,7 @@ type Config struct {
 		Secret string
 	}
 	Replacements map[string]string
+	Blacklist map[string]string
 }
 
 func parseConfig(path string) Config {

@@ -19,6 +19,16 @@ func processTweet(tweet string, config Config) string {
 	return output
 }
 
+func blacklisted(tweet string, config Config) bool {
+	for _, blacklist := range config.Blacklist {
+		if strings.Contains(tweet, blacklist) {
+			return true
+		}
+	}
+	return false
+}
+
+
 func hasReplacement(tweet string, config Config) bool {
 	for _, replacement := range config.Replacements {
 		if strings.Contains(tweet, replacement) {
@@ -32,7 +42,7 @@ func processTweets(tweets []string, config Config) []string {
 	tweetsNew := make(map[string]bool)
 	for _, tweet := range tweets {
 		output := processTweet(tweet, config)
-		if hasReplacement(output, config) {
+		if hasReplacement(output, config) && ! blacklisted(output, config) {
 			tweetsNew[output] = true
 		}
 	}

@@ -4,8 +4,8 @@ $.getJSON("/tweets", function(data) {
         items.push(
 		"<div class=tweet id='tweet" + key + "'>" + val +
 		"<br>" +
-		"<button class='tweetbutton'>tweet</button>" +
-		"<button class='blacklist'>blacklist</button>" +
+		"<button class='btn btn-primary'>tweet</button>" +
+		"<button class='btn btn-danger'>blacklist</button>" +
 		"</div>"
 	);
     });

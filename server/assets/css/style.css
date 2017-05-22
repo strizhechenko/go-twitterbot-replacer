@@ -1,27 +1,16 @@
 body {
-  font-family: "Helvetica";
+	font-family: "Helvetica";
 }
 
 .tweet {
- width: 400px;
- float: left;
- height: 90px;
- padding: 5px;
- margin: 5px;
- color: #2F4F4F;
+	width: 400px;
+	float: left;
+	height: 90px;
+	padding: 5px;
+	margin: 5px;
+	color: #2F4F4F;
 }
 
 button {
-	margin-right: 3px;
-	padding: 3px;
-	font-size: 14px;
-	color: white;
-}
-
-button.blacklist {
-	background: #f00;
-}
-
-button.tweetbutton {
-	background: #aaf;
+	margin-right: 3px !important;
 }
